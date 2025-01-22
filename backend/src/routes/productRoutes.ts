@@ -8,6 +8,6 @@ const router = Router();
 router.post('/create', validateFields, asyncHandler(createProduct));
 router.get('/getAll', asyncHandler(getProducts));
 router.get('/getbyid/:id', asyncHandler(getProductById));
-router.delete('/:id', asyncHandler(deleteProduct));
+router.delete('/delete/:id', asyncHandler(deleteProduct));
 
 export default router;

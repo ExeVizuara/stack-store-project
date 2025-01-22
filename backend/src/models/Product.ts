@@ -6,7 +6,7 @@ interface ProductAttributes {
     name: string;
     category: string;
     code: number;
-    expiration: Date;
+    expiration: string;
     stock: number;
     cost: number;
     discount: number;
@@ -21,7 +21,7 @@ class Product extends Model<ProductAttributes, ProductCretionAttributes> impleme
     public name!: string;
     public category!: string;
     public code!: number;
-    public expiration!: Date;
+    public expiration!: string;
     public stock!: number;
     public cost!: number;
     public discount!: number;
@@ -49,7 +49,7 @@ Product.init(
             allowNull: false,
         },
         expiration: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         stock: {

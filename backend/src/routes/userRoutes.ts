@@ -11,9 +11,9 @@ import {
 
 const router = Router();
 
-router.get('/users', asyncHandler(getAllUsers));
-router.get('/users/:id', asyncHandler(getUserById));
-router.put('/users/:id', asyncHandler(updateUser));
-router.delete('/users/:id', asyncHandler(deleteUser));
+router.get('/', asyncHandler(getAllUsers));
+router.get('/:id', asyncHandler(getUserById));
+router.put('/:id', asyncHandler(updateUser));
+router.delete('/:id', asyncHandler(deleteUser));
 
 export default router;

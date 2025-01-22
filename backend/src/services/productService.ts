@@ -5,7 +5,7 @@ export class ProductService {
         name: string;
         category: string;
         code: number;
-        expiration: Date;
+        expiration: string;
         stock: number;
         cost: number;
         discount: number;

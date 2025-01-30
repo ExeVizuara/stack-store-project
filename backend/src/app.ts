@@ -6,11 +6,18 @@ import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes"
 import { verifyToken } from './middleware/verifyToken';
 import cookieParser from 'cookie-parser';
-
+import cors from "cors";
 const app : Application = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Dirección del frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+    credentials: true // Si necesitas enviar cookies
+}));
 
 // Rutas publicas
 app.use('/api/auth', authRoutes);

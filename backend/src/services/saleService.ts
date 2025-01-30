@@ -1,6 +1,7 @@
 import sequelize from "../config/database";
+import Product from "../models/Product";
 import Sale, { SaleAttributes } from "../models/Sale";
-import { SaleProducts } from "../models/SaleProducts";
+import SaleProducts from "../models/SaleProducts";
 
 interface CreateSaleInput {
     user_id: number;
@@ -20,43 +21,77 @@ interface UpdateSaleData {
 
 export class SaleService {
 
-    static async createSale(data: CreateSaleInput) {
+    static async createSale(data: CreateSaleInput, quantity: { [key: number]: number }) {
         const t = await sequelize.transaction();
 
         try {
             const { user_id, products } = data;
+            const total = products.reduce((sum, product) => {
+                const productQuantity = quantity[product.product_id] || 0; // Obtener la cantidad desde el objeto quantity
+                return sum + (product.price * productQuantity); // Calcular el precio total
+            }, 0);
 
             // Crear la venta
             const sale = await Sale.create(
-                { user_id, total: products.reduce((sum, p) => sum + p.price * p.quantity, 0) },
+                { user_id, total },
                 { transaction: t }
             );
 
             // Crear las entradas en SaleProducts
-            const saleProducts = products.map(product => ({
-                sale_id: sale.id,
-                product_id: product.product_id,
-                quantity: product.quantity,
-                price: product.price
-            }));
+
+            const saleProducts = products.map(product => {
+                console.log(product.product_id); // Verifica el contenido del producto
+                return {
+                    sale_id: sale.id,
+                    product_id: product.product_id,
+                    quantity: quantity[product.product_id],
+                    price: product.price
+                };
+            });
 
             await SaleProducts.bulkCreate(saleProducts, { transaction: t });
 
             await t.commit();
+            console.log(sale);
             return sale;
         } catch (error) {
+            console.error('Error al crear la venta:', error);
             await t.rollback();
-            throw new Error('Error al crear la venta');
+            throw new Error(`Error al crear la venta: ${error}`);
         }
     }
 
-    static async getSaleById(id: number) {
+    // static async getSaleById(id: number) {
+    //     try {
+    //         const user = await Sale.findByPk(id);
+    //         if (!user) throw new Error('Venta no encontrada');
+    //         return user;
+    //     } catch (error) {
+    //         throw new Error(`Error al obtener la venta: ${error}`);
+    //     }
+    // }
+
+    static async getSaleById(saleId: number) {
         try {
-            const user = await Sale.findByPk(id);
-            if (!user) throw new Error('Producto no encontrado');
-            return user;
+            const sale = await Sale.findOne({
+                where: { id: saleId }, // El ID de la venta que estás buscando
+                include: [
+                  {
+                    model: Product, // El modelo de los productos
+                    as: 'products', // El alias definido en la relación
+                    through: { attributes: ['quantity', 'price'] }, // Asegúrate de incluir los atributos de la tabla intermedia (SaleProducts)
+                  }
+                ]
+              });
+            
+
+            if (!sale) {
+                throw new Error('Venta no encontrada');
+            }
+
+            return sale;
         } catch (error) {
-            throw new Error(`Error al obtener el producto: ${error}`);
+            throw new Error(`Error al obtener la venta: ${error}`);
         }
     }
 

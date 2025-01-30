@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from '../config/database';
 
 interface ProductAttributes {
-    id: number;
+    product_id: number;
     name: string;
     category: string;
     code: number;
@@ -14,10 +14,10 @@ interface ProductAttributes {
     created_at: Date;
 }
 
-type ProductCretionAttributes = Optional<ProductAttributes, 'id' | 'created_at'>;
+type ProductCretionAttributes = Optional<ProductAttributes, 'product_id' | 'created_at'>;
 
 class Product extends Model<ProductAttributes, ProductCretionAttributes> implements ProductAttributes {
-    public id!: number;
+    public product_id!: number;
     public name!: string;
     public category!: string;
     public code!: number;
@@ -31,7 +31,7 @@ class Product extends Model<ProductAttributes, ProductCretionAttributes> impleme
 
 Product.init(
     {
-        id: {
+        product_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,

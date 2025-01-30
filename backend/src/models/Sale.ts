@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from '../config/database';
+import Product from "./Product";
 
 export interface SaleAttributes {
     id: number;
@@ -7,6 +8,7 @@ export interface SaleAttributes {
     total: number;
     createdAt?: Date;
     updatedAt?: Date;
+    products?: Product[];
 }
 
 type SaleCreationAttributes = Optional<SaleAttributes, 'id'>;
@@ -17,6 +19,7 @@ class Sale extends Model<SaleAttributes, SaleCreationAttributes> implements Sale
     public total!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+    public readonly products?: Product[];
 }
 
 Sale.init({

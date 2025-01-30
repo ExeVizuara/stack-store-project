@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD || '', // Contraseña
   {
     host: process.env.DB_HOST || 'localhost', // Host
+    timezone: '-03:00',
     port: Number(process.env.DB_PORT) || 3306, // Puerto
     dialect: 'mysql',                         // Motor de base de datos
     logging: console.log,                          // Desactiva logs de SQL

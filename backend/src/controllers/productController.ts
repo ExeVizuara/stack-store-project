@@ -73,8 +73,9 @@ export const updateProductStock = async (req: Request, res: Response) => {
   try {
       const { stock } = req.body;
       const { id } = req.params;
+      console.log(stock, id);
 
-      if (!id || !stock) {
+      if (!id || stock < 0) {
           return res.status(400).json({ message: 'ID del producto y stock son requeridos' });
       }
 

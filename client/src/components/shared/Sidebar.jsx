@@ -8,7 +8,7 @@ import { MdOutlinePointOfSale } from "react-icons/md";
 import { BrowserRouter, NavLink } from "react-router-dom";
 import { VitecLogo } from "../../utils/VitecLogo";
 import axios from "axios";
-import { useAuthContext } from "../../services/AuthProvider";
+import { useAuthContext } from "../providers/AuthProvider";
 
 export function Sidebar({ onItemClick, activedCats, showMenu }) {
 

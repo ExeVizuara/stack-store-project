@@ -3,26 +3,24 @@ import { ItemDescription } from "./ItemDescription";
 import { RiSearch2Line } from "react-icons/ri";
 import { FindContent } from "./FindContent";
 import { PrintReceipt } from "./PrintReceip";
-import { actualizeStock } from "../../services/productService";
+import { actualizeStock, loadAllProducts } from "../../services/productService";
 import { searchName } from "../../utils/SearchName";
 import { addSale } from "../../services/saleService";
-import { useSearchContext } from "../../services/SearchProvider";
-import { calculateInGrams } from "../../services/MathematicalOperationsService";
-import { useStaticsContext } from "../../services/StaticsProvider";
-import { useProductContext } from "../../services/ProductProvider";
+import { useSearchContext } from "../providers/SearchProvider";
+import { calculateInGrams } from "../../services/mathematicalOperationsService";
+import { useStaticsContext } from "../providers/StaticsProvider";
+import { useProductContext } from "../providers/ProductProvider";
+import { useFetchData } from "../../services/UseFetchData";
 
 export function SaleSection() {
 
+    const { fetchAllSales, fetchDailyGain, fetchProducts } = useFetchData();
+    const { productList } = useProductContext();
     const { search,
         setSearch,
         searchProducts,
         setSearchProducts
     } = useSearchContext();
-    const { totalSaleOfTheDay,
-        setTotalSaleOfTheDay,
-        setAllSales
-    } = useStaticsContext();
-    const { productList } = useProductContext();
 
     const [selectProduct, setSelectProduct] = useState([]);
     const [inListProduct, setInListProduct] = useState({});
@@ -33,7 +31,6 @@ export function SaleSection() {
     const [subTotal, setSubTotal] = useState({});
     const [total, setTotal] = useState(0);
     const [printReceipt, setPrintReceipt] = useState(false);
-    const [printTicket, setPrintTicket] = useState({ ticket: null });
 
     useEffect(() => {
         setSearch("");
@@ -55,7 +52,7 @@ export function SaleSection() {
         console.log(results);
     }
 
-    const storeInitialStock = async (productId, stock, price, product) => {
+    const storeInitialStock = (productId, stock, price, product) => {
         setInitialStocks(({...initialStocks, [productId]: stock}));
         setSelectProduct([...selectProduct, product]);
         setTotal(total + price);
@@ -114,7 +111,7 @@ export function SaleSection() {
         }
     };
 
-    const addQuantity = async (productId, productPrice) => {
+    const addQuantity = (productId, productPrice) => {
         console.log('Stock inicial: ', initialStocks[productId]);
         if (initialStocks[productId] <= 0) {
             return alert("No hay stock disponible de ese producto!");
@@ -137,7 +134,7 @@ export function SaleSection() {
         setTotal(total - productPrice);
     }
 
-    const removeProduct = async (index, product) => {
+    const removeProduct = (index, product) => {
         const updatedProducts = selectProduct.filter((_, i) => i !== index);
         setSelectProduct(updatedProducts);
         setInitialStocks({...initialStocks, 
@@ -167,7 +164,9 @@ export function SaleSection() {
         }));
         await addSale(simplifiedProducts, quantity);
         await actualizeStock(simplifiedProducts, initialStocks);
-        setTotalSaleOfTheDay(totalSaleOfTheDay + total);
+        await fetchProducts();
+        await fetchAllSales();
+        await fetchDailyGain();
         //await addOrUpdateWeeklySale(total);
     }
 
@@ -202,7 +201,7 @@ export function SaleSection() {
                         </div>
                     </div>
                     <div className="relative bg-[#262837] rounded-xl">
-                        {printReceipt && <PrintReceipt products={selectProduct} total={total} quantity={quantity} subTotal={subTotal} quit={quit} />}
+                        {printReceipt && <PrintReceipt products={selectProduct} total={total} quantity={quantity} quit={quit} />}
                         <ItemDescription products={selectProduct} removeProduct={removeProduct} total={total} cancelOperation={cancelOperation} chargeProducts={chargeProducts} quantity={quantity} addQuantity={addQuantity} subtractQuantity={subtractQuantity} subTotal={subTotal} />
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import { CurrentTime } from "../components/shared/Clock";
+import moment from "moment-timezone";
 import axios from "axios";
 
 const API_URL = 'http://localhost:3000';
@@ -24,7 +25,6 @@ export const loadHistorySales = async (sales) => {
                 const response = await axios.get(`${API_URL}/api/sales/${sale.id}`, {
                     withCredentials: true, 
                 });
-                console.log(response.data);
                 return response.data;
             } catch (error) {
                 console.error(`Error al cargar la venta con ID ${sale.sale_id}:`, error);
@@ -99,15 +99,13 @@ export const loadDailySales = async (date) => {
 // };
 
 export const addSale = async (productList, quantity) => {
-    const currentDateTime = CurrentTime();
     try {
         const response = await axios.post(`${API_URL}/api/sales/create`, {
                 products: productList,
                 quantity: quantity,
             },{ withCredentials: true }
         );
-        const daily = await loadDailySales(currentDateTime);
-        return daily; 
+        return response;
     } catch (error) {
         console.error("Error al realizar la operación", error);
         alert("Ocurrió un error al procesar la solicitud. Por favor, intenta nuevamente más tarde.");
@@ -179,12 +177,11 @@ export const addSale = async (productList, quantity) => {
 // };
 
 export const getDailyGain = async () => {
-    const date = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    const date = moment().tz('America/Argentina/Buenos_Aires').format("YYYY-MM-DD");
     try {
         const sales = await loadDailySales(date);
         if (!sales) return 0;
         const dailyGain = sales.reduce((total, sale) => {
-            console.log(`Sumando: ${total} + ${sale.total}`);
             return total + sale.total;
         }, 0);
 

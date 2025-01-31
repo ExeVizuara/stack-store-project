@@ -1,11 +1,10 @@
 import { SellItem } from "./SellItem";
 import { useEffect } from "react";
-import { Clock, CurrentTime } from "../shared/Clock";
+import { Clock } from "../shared/Clock";
 
-export function PrintReceipt({ products, total, quit, quantity, subTotal }) {
+export function PrintReceipt({ products, total, quantity, quit }) {
 
     useEffect(() => {
-        products
     }, []);
 
     return (
@@ -27,12 +26,8 @@ export function PrintReceipt({ products, total, quit, quantity, subTotal }) {
                 </ul>
                 <div className="overflow-y-auto overflow-x-auto sm:rounded-md text-slate-600 w-full">
                     {products.map((product, index) => (
-                        product.category === 'PorKG' ?
-                            <SellItem key={index} name={product.name} price={product.price} quantity={quantity[product.id]} total={subTotal[product.id]} category={product.category} />
-                            :
-                            <SellItem key={index} name={product.name} price={product.price} quantity={quantity[product.id]} total={subTotal[product.id]*quantity[product.id]} category={product.category} />
-                        ))
-                    }
+                        <SellItem key={index} name={product.dataValues.name} price={product.dataValues.price} quantity={(quantity[product.dataValues.product_id])} category={product.dataValues.category} />
+                    ))}
                 </div>
                 <div className="flex flex-row gap-10 pt-4">
                     <span className="text-2xl text-slate-600">Total:</span>

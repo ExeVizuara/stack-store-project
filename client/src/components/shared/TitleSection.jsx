@@ -1,9 +1,9 @@
 import { RiSearch2Line } from "react-icons/ri";
 import { useState } from "react";
 import { Clock } from "./Clock";
-import { useSearchContext } from "../../services/SearchProvider";
+import { useSearchContext } from "../providers/SearchProvider";
 import { searchName } from "../../utils/SearchName";
-import { useProductContext } from "../../services/ProductProvider";
+import { useProductContext } from "../providers/ProductProvider";
 
 export function TitleSection() {
 

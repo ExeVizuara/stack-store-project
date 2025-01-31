@@ -2,6 +2,7 @@ import sequelize from "../config/database";
 import Product from "../models/Product";
 import Sale, { SaleAttributes } from "../models/Sale";
 import SaleProducts from "../models/SaleProducts";
+import { calculateInGrams } from "./mathematicalOperationsService";
 
 interface CreateSaleInput {
     user_id: number;
@@ -27,7 +28,11 @@ export class SaleService {
         try {
             const { user_id, products } = data;
             const total = products.reduce((sum, product) => {
-                const productQuantity = quantity[product.product_id] || 0; // Obtener la cantidad desde el objeto quantity
+                const productQuantity = quantity[product.product_id] || 0;
+                if (productQuantity > 50) {
+                    const totalPrice = calculateInGrams(productQuantity, product.price);
+                    return totalPrice;
+                } else 
                 return sum + (product.price * productQuantity); // Calcular el precio total
             }, 0);
 

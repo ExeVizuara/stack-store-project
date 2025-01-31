@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { MainContent } from "./components/shared/MainContent";
 import { MobileMain } from "./components/shared/MobileMain";
 import { Sidebar } from "./components/shared/Sidebar";
-import { useSearchContext } from "./services/SearchProvider";
+import { useSearchContext } from "./components/providers/SearchProvider";
 import { Login } from "./components/controller/Login";
 import { checkToken } from "./services/authService";
-import { useAuthContext } from "./services/AuthProvider";
+import { useAuthContext } from "./components/providers/AuthProvider";
 
 function App() {
   const { search, setSearchProducts } = useSearchContext();

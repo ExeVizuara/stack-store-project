@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { deleteProduct, loadProductsByCategory, updateProduct } from "../../../services/productService";
-import { useSearchContext } from "../../../services/SearchProvider";
+import { useSearchContext } from "../../providers/SearchProvider";
 import { ButtonSave, ButtonDelete } from "../../shared/ButtonsEditProduct";
 import { UpdateField } from "./UpdateField";
 import { registerLocale, setDefaultLocale } from "react-datepicker";

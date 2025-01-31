@@ -1,5 +1,5 @@
 import { Product } from "./Product";
-import { useSearchContext } from "../../../services/SearchProvider";
+import { useSearchContext } from "../../providers/SearchProvider";
 
 export function ProductList({ productList, filteredProducts, editMode, isLoading }) {
 

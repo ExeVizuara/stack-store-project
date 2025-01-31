@@ -3,7 +3,7 @@ import { NavbarProducts } from "./products/NavbarProducts";
 import { ProductList } from "./products/ProductList";
 import { UploadProduct } from "./products/UploadProduct";
 import { UpdateProduct } from "./products/UpdateProduct";
-import { useSearchContext } from "../../services/SearchProvider";
+import { useSearchContext } from "../providers/SearchProvider";
 import { LoadingProducts } from "../../utils/LoadingProducts";
 
 export function AlmacenSection({ productsList, loadProducts, filteredProducts, cat, editMode }) {

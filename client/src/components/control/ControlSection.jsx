@@ -3,8 +3,8 @@ import { NavbarSections } from "./NavbarSections";
 import { AlmacenSection } from "./AlmacenSection";
 import { loadProductsByCategory } from "../../services/productService";
 import { UpdateProduct } from "./products/UpdateProduct";
-import { useSearchContext } from "../../services/SearchProvider";
-import { useProductContext } from "../../services/ProductProvider";
+import { useSearchContext } from "../providers/SearchProvider";
+import { useProductContext } from "../providers/ProductProvider";
 
 export function ControlSection() {
 

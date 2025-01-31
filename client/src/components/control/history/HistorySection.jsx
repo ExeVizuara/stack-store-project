@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { HistoryNav } from "./HistoryNav";
 import { HistoryItem } from "./HistoryItem";
 import { CurrentDay } from "../../shared/Clock";
-import { calculateInGrams } from "../../../services/MathematicalOperationsService";
-import { useStaticsContext } from "../../../services/StaticsProvider";
+import { calculateInGrams } from "../../../services/mathematicalOperationsService";
+import { useStaticsContext } from "../../providers/StaticsProvider";
 
 export function HistorySection() {
 
@@ -14,7 +14,6 @@ export function HistorySection() {
     allSales } = useStaticsContext();
 
   useEffect(() => {
-    console.log(allSales);
   }, []);
 
   return (

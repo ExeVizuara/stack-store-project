@@ -32,8 +32,9 @@ export class SaleService {
                 if (productQuantity > 50) {
                     const totalPrice = calculateInGrams(productQuantity, product.price);
                     return totalPrice;
-                } else 
-                return sum + (product.price * productQuantity); // Calcular el precio total
+                } else {
+                    return sum + (product.price * productQuantity); // Calcular el precio total
+                }
             }, 0);
 
             // Crear la venta

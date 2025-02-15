@@ -10,7 +10,7 @@ export const validateFieldsInCreateProduct = (req: Request, res: Response, next:
         'discount', 
         'price'
     ];
-    const allFieldsPresent = requiredFields.every(field => req.body[field]); 
+    const allFieldsPresent = requiredFields.every(field => req.body.hasOwnProperty(field));
     if (!allFieldsPresent) { 
         res.status(400).json({ error: 'Todos los campos son obligatorios' }); 
         return;

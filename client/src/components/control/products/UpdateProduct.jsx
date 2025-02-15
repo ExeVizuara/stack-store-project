@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { deleteProduct, loadProductsByCategory, updateProduct } from "../../../services/productService";
+import { deleteProduct, updateProduct } from "../../../services/productService";
+import { useFetchData } from "../../../services/UseFetchData";
 import { useSearchContext } from "../../providers/SearchProvider";
 import { ButtonSave, ButtonDelete } from "../../shared/ButtonsEditProduct";
 import { UpdateField } from "./UpdateField";
@@ -11,6 +12,7 @@ setDefaultLocale('es');
 export function UpdateProduct({ productList, currentPage, editMode, productEdit }) {
 
     const { setCurrentCategory } = useSearchContext();
+    const { fetchProducts } = useFetchData();
     const [actualizeProduct, setActualizeProduct] = useState({});
     const [expiration, setExpiration] = useState("");
     const initialProductState = {
@@ -52,6 +54,7 @@ export function UpdateProduct({ productList, currentPage, editMode, productEdit 
             });
             editMode();
             setCurrentCategory(currentPage);
+            fetchProducts();
         } catch (error) {
             console.error("Error al actualizar el producto:", error.message || error);
             alert("Ocurrió un error al actualizar el producto. Intenta de nuevo.");

@@ -31,15 +31,9 @@ export class SaleService {
                 const productQuantity = quantity[product.product_id] || 0;
                 if (productQuantity > 50) {
                     const totalPrice = calculateInGrams(productQuantity, product.price);
-<<<<<<< HEAD
                     return totalPrice;
                 } else {
                     return sum + (product.price * productQuantity); // Calcular el precio total
-=======
-                    return sum + totalPrice;
-                } else {
-                    return sum + (product.price * productQuantity);
->>>>>>> c68419876e6fa0251f1e4f93ef081d13402c58e0
                 }
             }, 0);
 

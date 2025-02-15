@@ -58,7 +58,8 @@ export const getSaleById = async (saleId) => {
 //         const weeklySaleFromAPI = apiData.data.listWeeklySales.items;
 //         return weeklySaleFromAPI;
 //     } catch (error) {
-//         console.error('Error al cargar registro de venta semanal:', error);
+//         console.error('Error al cargar registro de venta semanal:', error);zB< avvvvvvv|pCCFV V }{ -
+//  CV erw   LV}
 //     }
 // };
 

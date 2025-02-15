@@ -5,12 +5,12 @@ const API_URL = 'http://localhost:3000';
 export const loadAllProducts = async () => {
     try {
         const response = await axios.get(`${API_URL}/api/products/getall`, {
-            withCredentials: true, 
+            withCredentials: true,
         });
         return response.data;
     } catch (error) {
         console.error('Error al obtener todos los productos', error);
-        throw error; 
+        throw error;
     }
 };
 
@@ -29,8 +29,8 @@ export const loadProductsByCategory = async (category) => {
 export const addProduct = async (productData) => {
     try {
         console.log(productData);
-        const response = await axios.post(`${API_URL}/api/products/create`, 
-            productData, 
+        const response = await axios.post(`${API_URL}/api/products/create`,
+            productData,
             { withCredentials: true }
         );
         alert("Producto cargado correctamente en la categoría ", productData.category);
@@ -41,11 +41,31 @@ export const addProduct = async (productData) => {
     }
 };
 
+export const addMultipleProducts = async (products) => {
+    try {
+        const resultado = confirm(`Agregar ${products.length} productos?`);
+        if (resultado) {
+            const responses = await Promise.all(products.map(async (product) => {
+                const response = await axios.post(`${API_URL}/api/products/create`,
+                    product,
+                    { withCredentials: true }
+                );
+                return response.data;
+            }));
+            alert("Productos cargados correctamenmte en la categoría");
+            return responses;
+        }
+    } catch (error) {
+        console.error("Error al agregar nuevos productos:", error);
+        alert("Ocurrió un error al procesar la solicitud. Por favor, intenta nuevamente más tarde");
+    }
+};
+
 
 export const updateProduct = async (productData) => {
     try {
         const response = await axios.put(`${API_URL}/api/products/${productData.product_id}`,
-            productData, 
+            productData,
             { withCredentials: true }
         );
         alert(`Producto actualizado correctamente en la categoría ${productData.category}`);

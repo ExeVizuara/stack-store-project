@@ -5,7 +5,7 @@ import { Op } from 'sequelize';
 import moment from "moment-timezone";
 
 export const createSale = async (req: Request, res: Response, next: NextFunction) => {
-  const { products, quantity } = req.body;
+  const { products, quantity, total } = req.body;
   const user_id = Number(req.user?.id);
 
   if (isNaN(user_id)) {
@@ -16,7 +16,7 @@ export const createSale = async (req: Request, res: Response, next: NextFunction
   }
 
   try {
-    const sale = await SaleService.createSale({ user_id, products }, quantity);
+    const sale = await SaleService.createSale({ user_id, products }, quantity, total);
     res.status(201).json({ message: 'Venta registrada con éxito', sale });
   } catch (error) {
     console.error('Error al registrar la venta:', error);

@@ -99,11 +99,12 @@ export const loadDailySales = async (date) => {
 //     }
 // };
 
-export const addSale = async (productList, quantity) => {
+export const addSale = async (productList, quantity, total) => {
     try {
         const response = await axios.post(`${API_URL}/api/sales/create`, {
                 products: productList,
                 quantity: quantity,
+                total: total
             },{ withCredentials: true }
         );
         return response;
@@ -183,6 +184,7 @@ export const getDailyGain = async () => {
         const sales = await loadDailySales(date);
         if (!sales) return 0;
         const dailyGain = sales.reduce((total, sale) => {
+            console.log(sale.total);
             return total + sale.total;
         }, 0);
 

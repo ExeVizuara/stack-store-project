@@ -22,20 +22,11 @@ interface UpdateSaleData {
 
 export class SaleService {
 
-    static async createSale(data: CreateSaleInput, quantity: { [key: number]: number }) {
+    static async createSale(data: CreateSaleInput, quantity: { [key: number]: number }, total: number) {
         const t = await sequelize.transaction();
 
         try {
             const { user_id, products } = data;
-            const total = products.reduce((sum, product) => {
-                const productQuantity = quantity[product.product_id] || 0;
-                if (productQuantity > 50) {
-                    const totalPrice = calculateInGrams(productQuantity, product.price);
-                    return sum + (totalPrice * productQuantity); // Calcular el precio total
-                } else {
-                    return sum + (product.price * productQuantity); // Calcular el precio total
-                }
-            }, 0);
 
             // Crear la venta
             const sale = await Sale.create(

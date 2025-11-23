@@ -20,7 +20,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'development', // Solo en HTTPS si está en producción
-      maxAge: 3600000, // Expira en 1 hora
+      maxAge: 6 * 60 * 60 * 1000, // Expira en 1 hora
     });
     res.status(201).json({ message: 'Usuario registrado con éxito', token });
   } catch (error) {
@@ -46,7 +46,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
       httpOnly: true,
       secure: process.env.NODE_ENV === 'development', // Solo en HTTPS si está en producción
       sameSite: 'lax', // Necesario para solicitudes cross-origin
-      maxAge: 3600000, // Expira en 1 hora (en milisegundos)
+      maxAge: 6 * 60 * 60 * 1000, // Expira en 1 hora (en milisegundos)
     });
     res.status(200).json({ message: `Bienvenido ${user.name}`, token });
     return user;

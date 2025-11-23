@@ -162,7 +162,7 @@ export function SaleSection() {
             product_id: product.dataValues.product_id,
             price: product.dataValues.price,
         }));
-        await addSale(simplifiedProducts, quantity);
+        await addSale(simplifiedProducts, quantity, total);
         await actualizeStock(simplifiedProducts, initialStocks);
         await fetchProducts();
         await fetchAllSales();

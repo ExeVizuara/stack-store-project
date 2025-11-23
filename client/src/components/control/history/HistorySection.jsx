@@ -37,7 +37,7 @@ export function HistorySection() {
                     <HistoryItem
                       key={product.product_id} // Utiliza un identificador único para cada producto
                       product_name={product.name}
-                      price={product.SaleProducts.quantity > 10 
+                      price={product.SaleProducts.quantity > 50 
                         ? calculateInGrams(product.SaleProducts.quantity, product.SaleProducts.price) 
                         : product.SaleProducts.price * product.SaleProducts.quantity}
                       quantity={product.SaleProducts.quantity}

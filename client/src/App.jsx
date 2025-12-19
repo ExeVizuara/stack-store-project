@@ -78,7 +78,7 @@ function App() {
 
   return (
     <>
-      {isAuthenticated ? (
+     {isAuthenticated ? (
         <div className="w-full h-full bg-[#333332d2]" onClick={handleOutSide}>
           <Sidebar 
             showMenu={showMenu}

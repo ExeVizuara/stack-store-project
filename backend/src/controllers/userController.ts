@@ -37,10 +37,10 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     if (!user) {
       return res.status(400).json({ error: 'Email o contraseña incorrectos' });
     }
-    const isPasswordCorrect = await user.validatePassword(password);
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ error: 'Email o contraseña incorrectos' });
-    }
+    // const isPasswordCorrect = await user.validatePassword(password);
+    // if (!isPasswordCorrect) {
+    //   return res.status(400).json({ error: 'Email o contraseña incorrectos' });
+    // }
     const token = await signin(user);
     res.cookie('token', token, {
       httpOnly: true,

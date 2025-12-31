@@ -6,11 +6,12 @@ dotenv.config();
 
 // Configurar Sequelize con las variables de entorno
 const sequelize = new Sequelize(
-  process.env.DB_DATABASE || '', // Base de datos
-  process.env.DB_USER || '',     // Usuario
+  process.env.DB_DATABASE || 'stack-store', // Base de datos
+  process.env.DB_USER || 'root',     // Usuario
   process.env.DB_PASSWORD || '', // Contraseña
   {
     host: process.env.DB_HOST || 'localhost', // Host
+    timezone: '-03:00',
     port: Number(process.env.DB_PORT) || 3306, // Puerto
     dialect: 'mysql',                         // Motor de base de datos
     logging: console.log,                          // Desactiva logs de SQL

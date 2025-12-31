@@ -5,14 +5,15 @@ import {
   getAllSales,
   getSaleById,
   deleteSale,
-  getSalesOfTheDay,
+  getSalesByDate,
 } from '../controllers/saleController';
 
 
 const router = Router();
 
-router.get('/', asyncHandler(getAllSales));
-router.get('/today', asyncHandler(getSalesOfTheDay));
+router.get('/getall', asyncHandler(getAllSales));
+router.post('/create', asyncHandler(createSale));
+router.get('/daily', asyncHandler(getSalesByDate));
 router.get('/:id', asyncHandler(getSaleById));
 router.delete('/:id', asyncHandler(deleteSale));
 

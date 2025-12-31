@@ -6,6 +6,8 @@
 # Node artifact files
 node_modules/
 dist/
+backup/
+start.bat
 
 # Environment variables 
 .env

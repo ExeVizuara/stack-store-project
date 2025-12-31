@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (user: User) => {
     const token: string = jwt.sign({ id: user.id }, process.env.JWT_TOKEN || 'test', {
-        expiresIn: '1h',
+        expiresIn: '6h',
     });
     console.log('Usuario registrado con éxito', user, token);
     return token;
@@ -13,7 +13,7 @@ export const signup = async (user: User) => {
 
 export const signin = async (user: User) => {
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_TOKEN || 'test', {
-        expiresIn: '1h',
+        expiresIn: '6h',
     });
     console.log('Logueado correctamente');
     return token;
